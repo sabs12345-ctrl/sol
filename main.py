@@ -1,18 +1,12 @@
-from flask import Flask, request
+import os
+from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/webhook', methods=['POST'])
-def webhook():
-    data = request.json
-    signal = data.get('message')
-
-    if signal == "LONG 진입":
-        print("LONG 주문 실행")
-    elif signal == "SHORT 진입":
-        print("SHORT 주문 실행")
-
-    return "OK", 200
+@app.route('/')
+def hello():
+    return 'Hello from Render!'
 
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get('PORT', 10000))  # Render가 지정하는 포트
+    app.run(host='0.0.0.0', port=port)
